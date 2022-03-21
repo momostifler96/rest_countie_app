@@ -11,10 +11,25 @@
 
 
     <title>Document</title>
+    <style>
+        .row> *{
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="contaner">
-        <div class="row arlert-light">
+    <div class="container">
+        <div class=" row alert alert-info align-middle mt-5" role="alert">
+            <div class="col">
+                <Strong>Trier par : </Strong>
+            </div>
+            <div class="col">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" checked type="radio" name="Trier_par" id="" value="Nom"> Nom
+                    </label>
+                </div>
+            </div>
             <div class="col">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
@@ -36,10 +51,10 @@
                     </label>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-3">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                    <button class="btn btn-primary" type="button" id="button-addon2">Button</button>
                   </div>
             </div>
         </div>
