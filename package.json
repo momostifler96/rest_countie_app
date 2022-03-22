@@ -1,0 +1,25 @@
+{
+  "name": "rest_countie_app",
+  "version": "1.0.0",
+  "description": "une application front end avec l'api rest countrie en vuejs",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "express": "^4.17.3",
+    "vue": "^3.2.31"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/momostifler96/rest_countie_app.git"
+  },
+  "author": "momoledev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/momostifler96/rest_countie_app/issues"
+  },
+  "homepage": "https://github.com/momostifler96/rest_countie_app#readme"
+}
