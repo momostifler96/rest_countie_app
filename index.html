@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <title>Document</title>
     <style>
@@ -17,68 +18,91 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="app">
         
-        <div id="app" class=" row alert alert-info align-middle mt-5" role="alert">
+        <div id="" class=" row alert alert-info align-middle mt-5" role="alert">
             
-            <button @click="count++" class=" btn btn-primary">
-              Count is: {{  }}
+            <button @click="triepar" class=" btn btn-primary">
+              Count is: {{ search }} -- {{ check }}
             </button>
           </div>
-        <div class=" row alert alert-info row-align-middle mt-5" role="alert">
+        <div  class=" row alert alert-info row-align-middle mt-5" role="alert">
             <div class="col">
                 <Strong>Trier par : </Strong>
             </div>
             <div class="col">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" checked type="radio" name="Trier_par" id="" value="Nom"> Nom
+                        <input v-model="check" @change="checkk()" checked class="form-check-input" checked type="radio" name="Trier_par" id="" value="all"> Touts
                     </label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="Trier_par" id="" value="capital"> capital
+                        <input v-model="check" @change="checkk()" class="form-check-input"  type="radio" name="Trier_par" id="" value="name"> Nom
                     </label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="Trier_par" id="" value="capital"> Continant
+                        <input v-model="check" @change="checkk()" class="form-check-input" type="radio" name="Trier_par" id="" value="capital"> capital
+                    </label>
+                </div>
+                
+            </div>
+            <div class="col">
+                <div class="form-check form-check-inline" id="">
+                    <label class="form-check-label">
+                        <input v-model="check" @change="checkk()"  class="form-check-input" type="radio" name="Trier_par" id="" value="continent"> continant
                     </label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="Trier_par" id="" value="capital"> superficie
+                        <input v-model="check" @change="checkk()" class="form-check-input" type="radio" name="Trier_par" id="" value="superficie"> superficie
                     </label>
                 </div>
             </div>
             <div class="col-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-primary" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <div class="input-group" id="coutri_searche_dv">
+                    <input @input="recherch($check)" type="text" class="form-control" v-model="search" placeholder="Recherche ..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                  </div>
+                  <div class="form-group" id="continent_select_dv" style="display:none">                    
+                    <select v-model="selectedd" @change="recherch('region','continent')" class="form-control" name="continent" id="continent_select">
+                      <optgroup label="letected name">
+                          
+                        <option value="Africa">Afrique</option>
+                      <option value="europe">Europe</option>
+                      <option value="Americas">amerique</option>
+                      <option value="Asia">Asie</option>
+                      <option value="Antarctica">antartique</option>
+                      
+                      </optgroup>
+                        
+                    </select>
                   </div>
             </div>
         </div>
         <table class="table">
             <thead>
                 <tr>
-                    <th class="col">#</th>
-                    <th class="col">Nom</th>
-                    <th class="col">Capital</th>
-                    <th class="col">Continant</th>
+                    <th class="col-1">#</th>
+                    <th class="col-1">Nom</th>
+                    <th class="col-1">Capital</th>
+                    <th class="col-1">Continant</th>
+                    <th class="col-1">Drapeau</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr @for="Pays in pay">
-                    <th scope="row">1</th>
-                    <td>{{pay<!-- .name.common -->}}</td>
-                    <td>Abidjan</td>
-                    <td>Afrique</td>
+            <tbody id="data_tbb">
+                <tr v-for="(pay,index) in pays">
+                    <th col="1">{{Mn[index]}}</th>
+                    <td col="1">{{nom_pays[index]}}</td>
+                    <td col="1">{{capital_pays[index]}}</td>
+                    <td col="1">{{continent_pays[index]}}</td>
+                    <td col="1"><img v-bind:src="drapeau_pays[index]" alt="rest image"width="80" height="50"></td>
                 </tr>
                 
             </tbody>
@@ -89,31 +113,147 @@
         data() {
             return {
             message: "Hello world",
-            Pays:["aaaa","bbbb","cccc","dddd"]
+            pays:["aaaa","bbbb","cccc","dddd"],
+            nom_pays:[],
+            capital_pays:[],
+            continent_pays:[],
+            population_pays:[],
+            drapeau_pays:[],
+            monnai_pays:[],
+            Mn:[],
+            search:"",
+            check:"name",
+            selectedd:"",
+
             }
         },
         methods:{
-            recherch(){
+            checkk(){
+                console.log('radio box value',this.check)
+                
+                $("#coutri_searche_dv input").removeAttr("disabled");
+                $("#continent_select_dv select").removeAttr("disabled");
+                $("#continent_select_dv select").removeAttr("style");
+                $("#coutri_searche_dv input").removeAttr("style");
 
+
+
+                if (this.check =="continent") {
+                    console.log('radio box value cont',this.check)
+
+                    $("#continent_select_dv").removeAttr("style");
+                    
+                    $("#coutri_searche_dv").attr("style","display:none");
+                    
+
+                }
+                else if (this.check =="all") {
+                    $("#coutri_searche_dv input").attr("disabled","");
+                    $("#continent_select_dv select").attr("disabled","");
+                    this.recherch('all');
+                    
+                }
+                else if (this.check !="continent"){
+                    $("#coutri_searche_dv").removeAttr("style");
+                    $("#continent_select_dv").attr("style","display:none");
+                }
+
+            }
+            ,
+            recherch(order_by = "all",name =""){
+
+
+
+                if (name == 'continent') {
+                    name = this.selectedd
+                }
+                else{
+                    name = this.search
+                }
+
+                if (this.check != "all") {
+                    order_by = this.check
+                }
+
+                url = `https://restcountries.com/v3.1/${order_by}/${name}?fields=name,capital,continents,flags`;
+
+                 fetch(url,{
+                    method:"get",
+                    
+                }).then(response => response.json())
+                    .then(data => {
+                        console.log('fetch api',data)
+                        
+                        this.setPays(data)
+                
+                        
+                    }).catch((err) => {
+                        console.log('fech api error',err)
+
+                        if(err.message == 'Not Found'){
+                            console.log('no found message')
+                            errm = `
+                            <div class="alert alert-danger d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+  <div>
+    No search resut
+  </div>
+</div>
+                            `
+
+                            $("#data_tbb").empty();
+                            $("#data_tbb").append(errm);
+
+                        }
+                    })
+                        
             },
             triepar(){
-                this.Pays = {Nom:"mali",Capital:"bamako",Continant:"Afrique"}
+                this.pays = {Nom:"mali",Capital:"bamako",Continant:"Afrique"}
+            },
+
+            setPays(vars){
+                var countri = this.pays = vars;
+
+                this.nom_pays=[]
+                this.capital_pays=[]
+                this.continent_pays=[]
+                this.population_pays=[]
+                this.drapeau_pays=[]
+                this.monnai_pays=[]
+
+                countri.forEach(element => {
+                    this.nom_pays.push(element.name.common);
+                    this.capital_pays.push(element.capital?element.capital[0]:"no capital");
+                    this.continent_pays.push(element.continents[0]);
+                    this.population_pays.push(element.population);
+                    this.drapeau_pays.push(element.flags.png);
+
+                });
+                this.nom_pays.sort();
+
+                
             }
         },
         mounted(){
-            this.Pays = {Nom:"mali",Capital:"bamako",Continant:"Afrique"}
-            url = "https://restcountries.com/v3.1/all";
+            for (var i=1;i<=250;i++) {
+            this.Mn.push(i);
+            }
+            url = "https://restcountries.com/v3.1/all?fields=name,capital,continents,flags";
 
             fetch(url,{
                 method:"get",
                 
             }).then(response => response.json())
-                .then(data => (
-                    /* this.Pays = data */
+                 .then(data => {
+                     console.log('fetch api',data);
+                    this.setPays(data)
                     
-                    ));
+                }) 
                     },
         }).mount('#app')
+
+
     </script>
 </body>
 </html>
